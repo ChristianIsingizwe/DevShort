@@ -3,6 +3,8 @@
 // import LoginForm from "./components/auth/LoginForm";
 // import OTPVerificationForm from "./components/auth/OTPVerificationForm";
 
+import SearchBar from "./components/home/SearchBar";
+
 function App() {
   return (
     // <BrowserRouter>
@@ -14,7 +16,7 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
 
-    <>Hello world</>
+    <SearchBar />
   );
 }
 
