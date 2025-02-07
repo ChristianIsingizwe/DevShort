@@ -1,5 +1,19 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import SignUpForm from "./components/SignUpForm";
+import LoginForm from "./components/LoginForm";
+import OTPVerificationForm from "./components/OTPVerificationForm";
+
 function App() {
-  return <div className="font-bold underline text-3xl"> Hello world</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/verify-otp" element={<OTPVerificationForm />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
