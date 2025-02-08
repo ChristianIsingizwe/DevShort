@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
-body{
-    background-color: #0D0D0D;
+body {
+  background-color: #121212;
 }
+@layer utilities {
+    input[type="search"]::-webkit-search-cancel-button {
+      display: none;
+    }
+  }

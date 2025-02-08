@@ -1,23 +1,7 @@
-// import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-// import SignUpForm from "./components/auth/SignUpForm";
-// import LoginForm from "./components/auth/LoginForm";
-// import OTPVerificationForm from "./components/auth/OTPVerificationForm";
+import HomePage from "./pages/HomePage";
 
-import SearchBar from "./components/home/SearchBar";
-
-function App() {
-  return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/login" element={<LoginForm />} />
-    //     <Route path="/signup" element={<SignUpForm />} />
-    //     <Route path="/verify-otp" element={<OTPVerificationForm />} />
-    //     <Route path="*" element={<Navigate to="/" replace />} />
-    //   </Routes>
-    // </BrowserRouter>
-
-    <SearchBar />
-  );
-}
+const App = () => {
+  return <HomePage />;
+};
 
 export default App;
