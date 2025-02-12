@@ -1,4 +1,3 @@
-// src/repositories/VideoRepository.ts
 import { db } from "../config/database";
 import { videos } from "../models/videoModel";
 import { eq } from "drizzle-orm";
@@ -9,7 +8,9 @@ export class VideoRepository {
     title: string;
     description?: string;
     cloudinaryUrl: string;
-    thumbnailUrl?: string;
+    cloudinaryUrl480p: string;
+    cloudinaryUrl720p: string;
+    cloudinaryUrl1080p: string;
     duration?: number;
   }) {
     const result = await db.insert(videos).values(data).returning();
@@ -27,7 +28,9 @@ export class VideoRepository {
       title: string;
       description?: string;
       cloudinaryUrl?: string;
-      thumbnailUrl?: string;
+      cloudinaryUrl480p?: string;
+      cloudinaryUrl720p?: string;
+      cloudinaryUrl1080p?: string;
       duration?: number;
     }>
   ) {

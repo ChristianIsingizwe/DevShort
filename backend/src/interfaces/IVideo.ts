@@ -4,6 +4,9 @@ export interface IVideo {
   title: string;
   description?: string;
   cloudinaryUrl: string;
+  cloudinaryUrl480p: string;
+  cloudinaryUrl720p: string;
+  cloudinaryUrl1080p: string;
   thumbnailUrl?: string;
   duration?: number;
   createdAt: Date;
