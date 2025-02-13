@@ -1,4 +1,6 @@
 import { db } from "../config/database";
+import { comments } from "../models/commentModel";
+import { likes } from "../models/likeModel";
 import { videos } from "../models/videoModel";
 import { eq } from "drizzle-orm";
 
@@ -44,6 +46,15 @@ export class VideoRepository {
 
   async deleteVideo(id: number) {
     const result = await db.delete(videos).where(eq(videos.id, id)).returning();
+    if (result){
+      await db.delete(likes).where(eq(likes.videoId, id));
+      await db.delete(comments).where(eq(comments.videoId, id));
+      }
+    return result;
+  }
+
+  async getVideos() {
+    const result = await db.select().from(videos);
     return result;
   }
 }
