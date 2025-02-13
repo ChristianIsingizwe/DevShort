@@ -1,4 +1,3 @@
-// src/routes/videoRoutes.ts
 import express from 'express';
 import { VideoController, uploadLimiter } from '../controllers/VideoController';
 import { validateRequest } from '../middleware/validateRequest';

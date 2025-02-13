@@ -1,4 +1,3 @@
-// src/services/VideoService.ts
 import { VideoRepository } from "../repositories/VideoRepository";
 import cloudinary from "../config/cloudinary";
 import { Readable } from "stream";
@@ -8,9 +7,8 @@ import logger from "../utils/logger";
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-const UPLOAD_TIMEOUT = parseInt(process.env.UPLOAD_TIMEOUT || '300000', 10);
-const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE || '100000000', 10); // 100MB default
-
+const UPLOAD_TIMEOUT = parseInt(process.env.UPLOAD_TIMEOUT || "300000", 10);
+const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE || "100000000", 10);
 export class VideoService {
   private videoRepository: VideoRepository;
 
@@ -23,7 +21,9 @@ export class VideoService {
       throw new Error("Invalid input buffer");
     }
     if (buffer.length > MAX_FILE_SIZE) {
-      throw new Error(`File size exceeds maximum limit of ${MAX_FILE_SIZE / 1000000}MB`);
+      throw new Error(
+        `File size exceeds maximum limit of ${MAX_FILE_SIZE / 1000000}MB`
+      );
     }
   }
 
@@ -56,7 +56,9 @@ export class VideoService {
             resolve(Buffer.concat(chunks));
           })
           .on("progress", (progress) => {
-            logger.debug(`Processing ${resolution}p: ${progress.percent}% done`);
+            logger.debug(
+              `Processing ${resolution}p: ${progress.percent}% done`
+            );
           })
           .pipe()
           .on("data", (chunk: Buffer) => {
@@ -71,17 +73,19 @@ export class VideoService {
 
   private async uploadToCloudinary(
     buffer: Buffer,
-    options: { folder?: string; resource_type: string } = { resource_type: "video" }
+    options: { folder?: string; resource_type: string } = {
+      resource_type: "video",
+    }
   ): Promise<{ secure_url: string }> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         options,
         (error, result) => {
           if (error || !result) {
-            logger.error('Cloudinary upload error:', error);
+            logger.error("Cloudinary upload error:", error);
             return reject(error);
           }
-          logger.info('Successfully uploaded to Cloudinary');
+          logger.info("Successfully uploaded to Cloudinary");
           resolve({ secure_url: result.secure_url });
         }
       );
@@ -101,26 +105,24 @@ export class VideoService {
     duration?: number;
   }) {
     logger.info(`Starting video upload process for user ${params.userId}`);
-    
+
     try {
       this.validateFileBuffer(params.fileBuffer);
 
       const resolutions = [
-        { height: 480, label: '480p' },
-        { height: 720, label: '720p' },
-        { height: 1080, label: '1080p' }
+        { height: 480, label: "480p" },
+        { height: 720, label: "720p" },
+        { height: 1080, label: "1080p" },
       ];
 
       const processedVideos = await Promise.all(
-        resolutions.map(({ height }) => 
+        resolutions.map(({ height }) =>
           this.processVideoForResolution(params.fileBuffer, height)
         )
       );
 
       const uploads = await Promise.all(
-        processedVideos.map((video) => 
-          this.uploadToCloudinary(video)
-        )
+        processedVideos.map((video) => this.uploadToCloudinary(video))
       );
 
       const [upload480, upload720, upload1080] = uploads;
@@ -138,10 +140,10 @@ export class VideoService {
 
       const createdVideo = await this.videoRepository.createVideo(videoData);
       logger.info(`Successfully created video with ID ${createdVideo[0].id}`);
-      
+
       return createdVideo[0];
     } catch (error) {
-      logger.error('Error in video upload process:', error);
+      logger.error("Error in video upload process:", error);
       throw error;
     }
   }

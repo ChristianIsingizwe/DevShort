@@ -5,8 +5,7 @@ import logger from "../utils/logger";
 import rateLimit from "express-rate-limit";
 
 export const uploadLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 uploads per windowMs
+  windowMs: 15 * 60 * 1000,
   message: "Too many uploads from this IP, please try again after 15 minutes"
 });
 
@@ -27,7 +26,6 @@ export class VideoController {
         });
       }
 
-      // Validate request body
       const validatedData = await videoUploadSchema.parseAsync(req.body);
 
       logger.info(`Starting video upload for user ${validatedData.userId}`);

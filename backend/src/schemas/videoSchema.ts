@@ -6,9 +6,9 @@ export const videoUploadSchema = Joi.object({
     'any.required': 'User ID is required'
   }).custom((value: string) => Number(value)),
   
-  title: Joi.string().min(1).max(255).required().messages({
+  title: Joi.string().min(3).max(255).required().messages({
     'string.empty': 'Title is required',
-    'string.min': 'Title must be at least 1 character long',
+    'string.min': 'Title must be at least 3 character long',
     'string.max': 'Title cannot exceed 255 characters',
     'any.required': 'Title is required'
   }),
