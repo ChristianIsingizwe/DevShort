@@ -1,4 +1,3 @@
-// src/models/video.model.ts
 import { pgTable, serial, integer, text, timestamp } from "drizzle-orm/pg-core";
 
 export const videos = pgTable("videos", {
